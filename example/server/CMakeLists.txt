@@ -5,7 +5,7 @@ set(PROJECT_NAME server_test)
 project(${PROJECT_NAME})
 
 # find boost packages
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../DawnNet DawnNet)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../DawnNet_t DawnNet)
 
 # source
 file(GLOB_RECURSE SOURCES
@@ -15,7 +15,7 @@ add_executable(${PROJECT_NAME} ${SOURCES})
 
 target_include_directories(${PROJECT_NAME} PUBLIC
                            ${CMAKE_CURRENT_SOURCE_DIR}
-                           ${CMAKE_CURRENT_SOURCE_DIR}/../include)
+                           ${CMAKE_CURRENT_SOURCE_DIR}/../packets)
 
 # Linking
 target_link_libraries(${PROJECT_NAME} DawnNet)

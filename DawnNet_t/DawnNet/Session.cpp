@@ -8,7 +8,7 @@ namespace DawnNet
 {
 
     Session::Session(SocketType&& socket) 
-        : m_Socket(std::move(socket)), m_Buffer(eSzPacketMax), m_SendBuffer(eSzPacketMax)
+        : _socket(std::move(socket)), _buffer(eSzPacketMax), _sendBuffer(eSzPacketMax)
     {
     }
 
@@ -28,8 +28,8 @@ namespace DawnNet
 
         OnDisconnected();
 
-        if(m_Socket.is_open())
-            m_Socket.close(errCode);
+        if(_socket.is_open())
+            _socket.close(errCode);
 
         return errCode.value();
     }
@@ -37,16 +37,16 @@ namespace DawnNet
     ErrCode Session::Send(PacketHeader& packet, Size size)
     {
         // Add to buffer_
-        m_SendBuffer.Clear();
-        m_SendBuffer.Push(reinterpret_cast<char*>(&packet), size);
+        _sendBuffer.Clear();
+        _sendBuffer.Push(reinterpret_cast<char*>(&packet), size);
 
-        Send(m_SendBuffer.GetReadPtr(), m_SendBuffer.GetUsingSize());
+        Send(_sendBuffer.GetReadPtr(), _sendBuffer.GetUsingSize());
         return 0;
     }
 
     void Session::Send(char* buffer, int size)
     {
-        m_Socket.async_write_some(boost::asio::mutable_buffer(buffer, size), IOContext::Instance().BindExecutor(
+        _socket.async_write_some(boost::asio::mutable_buffer(buffer, size), IOContext::Instance().BindExecutor(
 			[this](const boost::system::error_code& ec, std::size_t sendSize)
             {
                 if(ec.value() != 0 || sendSize == 0)
@@ -62,16 +62,16 @@ namespace DawnNet
 
     ErrCode Session::RegisterRecv()
     {
-        Size size       = m_Buffer.GetUsableSize();
-        char* writePtr  = m_Buffer.GetWritePtr();
+        Size size       = _buffer.GetUsableSize();
+        char* writePtr  = _buffer.GetWritePtr();
 
-        if(size <  eSzPacketMin || m_Buffer.GetBufferSize() < size) 
+        if(size <  eSzPacketMin || _buffer.GetBufferSize() < size) 
         {
             Disconnect();
             return eErrCodeSesBufferFull;
         }
 
-        m_Socket.async_read_some(boost::asio::mutable_buffer(writePtr, size), IOContext::Instance().BindExecutor(
+        _socket.async_read_some(boost::asio::mutable_buffer(writePtr, size), IOContext::Instance().BindExecutor(
             [this](const boost::system::error_code& ec, std::size_t recvSize)
             {
                 
@@ -103,7 +103,7 @@ namespace DawnNet
             return eErrCodeInvalidSize;
         }
 
-        if(!m_Buffer.OnPush(recvSize))
+        if(!_buffer.OnPush(recvSize))
         {
             return eErrCodeSessionBufferFull;
         }
@@ -111,7 +111,7 @@ namespace DawnNet
 
         Size    size = 0;
         ErrCode result = 0;
-        char*   data = m_Buffer.Front(size, result);
+        char*   data = _buffer.Front(size, result);
         if(result != 0)
             return result;
 
@@ -123,16 +123,16 @@ namespace DawnNet
             }
 
             PacketHeader* header = reinterpret_cast<PacketHeader*>(data);
-            result = MessageHandler::Instance().Process(header->m_Message, header, size, this);
+            result = MessageHandler::Instance().Process(header->_message, header, size, this);
             if(result != 0)
                 break;
             
-            data = m_Buffer.Front(size, result);
+            data = _buffer.Front(size, result);
         }
         if(result != 0)
             return result;
 
-        m_Buffer.Pop();
+        _buffer.Pop();
         return 0;
     }
 

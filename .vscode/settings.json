@@ -77,6 +77,8 @@
         "stdexcept": "cpp",
         "streambuf": "cpp",
         "typeindex": "cpp",
-        "typeinfo": "cpp"
-    }
+        "typeinfo": "cpp",
+        "*.inc": "cpp"
+    },
+    "C_Cpp.intelliSenseCacheSize": 1024
 }

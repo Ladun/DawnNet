@@ -33,18 +33,18 @@ namespace DawnNet
         virtual void OnDisconnected() = 0;
 
     public: 
-        void SetID(uint32_t id) { m_id = id; }
-        uint32_t GetID() const { return m_id; }
+        void SetID(uint32_t id) { _id = id; }
+        uint32_t GetID() const { return _id; }
         SocketType& Socket()
         {
-            return m_Socket;
+            return _socket;
         }
 
     protected:
-        uint32_t m_id{};
-        SocketType m_Socket;
-        Buffer m_Buffer;
-        Buffer m_SendBuffer;
+        uint32_t _id{};
+        SocketType _socket;
+        Buffer _buffer;
+        Buffer _sendBuffer;
         
     };
     using SessionPtr = std::shared_ptr<Session>;

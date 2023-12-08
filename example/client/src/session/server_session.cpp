@@ -18,7 +18,7 @@ namespace ld_client
 
     void ServerSession::OnConnected()
     {
-        std::cout << "Connect to " << m_Socket.remote_endpoint().address().to_string() << " \n";
+        std::cout << "Connect to " << _socket.remote_endpoint().address().to_string() << " \n";
 
     }
     void ServerSession::OnSend(std::size_t sendSize)

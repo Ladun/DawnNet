@@ -2,6 +2,8 @@
 
 #include <DawnNet/Core.hpp>
 
+
+
 namespace DawnNet
 {
     using MessageNo = unsigned short;
@@ -10,7 +12,7 @@ namespace DawnNet
     class PacketHeader
     {
     public:
-        MessageNo m_Message{};        
+        MessageNo _message{};        
     };
     #pragma pack(pop)
 

@@ -20,7 +20,7 @@ namespace ld_server
 
     void ClientSession::OnConnected()
     {
-        std::cout << m_Socket.remote_endpoint().address().to_string() << " connected\n";
+        std::cout << _socket.remote_endpoint().address().to_string() << " connected\n";
     }
 
     void ClientSession::OnSend(std::size_t sendSize)
