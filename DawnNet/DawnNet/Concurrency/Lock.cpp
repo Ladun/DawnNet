@@ -1,5 +1,5 @@
 #include <DawnNet/pch.hpp>
-#include <DawnNet/Lock/Lock.hpp>
+#include <DawnNet/Concurrency/Lock.hpp>
 #include <DawnNet/Core/TLS.hpp>
 
 namespace DawnNet
@@ -14,11 +14,10 @@ namespace DawnNet
             return;
         }
 
-        const int64 beginTick = 0;
+        const int64 beginTick = XGetTickCount64();
         const uint32 desired = ((LThreadId << 16) & WRITE_THREAD_MASK);
         while(true)
         {
-            
             for (uint32 spinCount = 0; spinCount < MAX_SPIN_COUNT; spinCount++)
             {
                 uint32 expected = EMPTY_FLAG;
@@ -29,25 +28,25 @@ namespace DawnNet
                 }
             }
 
-            //TODO: implementation GetTickCount64
-            // if (::GetTickCount64() - beginTick >= ACQUIRE_TIMEOUT_TICK)
-            // {
-            //     CRASH("LOCK_TIMEOUT");
-            // }
-
+            if(XGetTickCount64() - beginTick >= ACQUIRE_TIMEOUT_TICK )
+            {
+                std::cout << "LOCK_TIMEOUT " << LThreadId << '\n';
+                DN_DEBUGBREAK();
+            }
+ 
             std::this_thread::yield();
         }
     }
     
     void Lock::WriteUnlock(const char* name)
     {
-        
         // ReadLock 을 풀기 전에는 WriteUnlock 불가능
-        if ((_lockFlag.load() & READ_COUNT_MASK) != 0)
+        
+        if((_lockFlag.load() & READ_COUNT_MASK) != 0 )
         {
-            // CRASH("INVALID_UNLOCK_ORDER");
-
-        }
+            std::cout << "INVALID_UNLOCK_ORDER\n";
+            DN_DEBUGBREAK();
+        }      
 
         const int32 lockCount = --_writeCount;
         if (lockCount == 0)
@@ -64,7 +63,7 @@ namespace DawnNet
         }
 
         // 아무도 락을 소유하고 있지 않을 때 경합해서 공유 카운트를 올린다.
-        const int64 beginTick = 0;//::GetTickCount64();
+        const int64 beginTick = XGetTickCount64();
         while (true)
         {
             for (uint32 spinCount = 0; spinCount < MAX_SPIN_COUNT; spinCount++)
@@ -74,8 +73,11 @@ namespace DawnNet
                     return;
             }
 
-            // if (::GetTickCount64() - beginTick >= ACQUIRE_TIMEOUT_TICK)
-            //     CRASH("LOCK_TIMEOUT");
+            if(XGetTickCount64() - beginTick >= ACQUIRE_TIMEOUT_TICK )
+            {
+                std::cout << "LOCK_TIMEOUT " << LThreadId << '\n';
+                DN_DEBUGBREAK();
+            }
 
             std::this_thread::yield();
         }
@@ -83,10 +85,10 @@ namespace DawnNet
 
     void Lock::ReadUnlock(const char* name)
     {
-        
-        if ((_lockFlag.fetch_sub(1) & READ_COUNT_MASK) == 0)
+        if((_lockFlag.fetch_sub(1) & READ_COUNT_MASK) == 0)
         {
-            // CRASH("MULTIPLE_UNLOCK");
+            std::cout << "Multiple unlock\n";
+            DN_DEBUGBREAK();
         }
     
     }

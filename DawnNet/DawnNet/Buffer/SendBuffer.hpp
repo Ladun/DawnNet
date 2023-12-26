@@ -30,7 +30,7 @@ namespace DawnNet
 		SendBufferChunk
 	------------------------*/
 
-	class SendBufferChunk : public enable_shared_from_this<SendBufferChunk>
+	class SendBufferChunk : public std::enable_shared_from_this<SendBufferChunk>
 	{
 		enum
 		{

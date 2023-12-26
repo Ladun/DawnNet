@@ -80,5 +80,8 @@
         "typeinfo": "cpp",
         "*.inc": "cpp"
     },
-    "C_Cpp.intelliSenseCacheSize": 1024
+    "C_Cpp.intelliSenseCacheSize": 1024,
+    "C_Cpp.default.forcedInclude": [
+        "${"
+    ]
 }

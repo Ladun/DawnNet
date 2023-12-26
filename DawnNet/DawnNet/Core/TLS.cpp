@@ -9,5 +9,5 @@ namespace DawnNet
 
     thread_local std::stack<int32_t>	LLockStack;
     thread_local SendBufferChunkRef	    LSendBufferChunk;
-    // thread_local JobQueue*			LCurrentJobQueue = nullptr;
+    thread_local JobQueue*			LCurrentJobQueue = nullptr;
 }

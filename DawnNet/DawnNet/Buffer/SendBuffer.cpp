@@ -107,7 +107,7 @@ namespace DawnNet
 
     void SendBufferManager::PushGlobal(SendBufferChunk* buffer)
     {
-        // cout << "PushGlobal SENDBUFFERCHUNK" << endl;
+        std::cout << "PushGlobal SENDBUFFERCHUNK" << std::endl;
         GSendBufferManager->Push(SendBufferChunkRef(buffer, PushGlobal));
     }
 }
