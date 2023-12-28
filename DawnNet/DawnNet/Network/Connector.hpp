@@ -1,7 +1,6 @@
 #pragma once
 
-#include <DawnNet/Core.hpp>
-#include <DawnNet/Session.hpp>
+#include <DawnNet/Network/Session.hpp>
 #include <cstring>
 
 namespace DawnNet
@@ -9,7 +8,7 @@ namespace DawnNet
     class Connector
     {
     public:
-        Connector(std::function<SessionPtr(SocketType)> sessionFactory,
+        Connector(std::function<SessionRef(SocketType)> sessionFactory,
                   const std::string& host, 
                   const std::string& port);
         ~Connector();
@@ -21,12 +20,12 @@ namespace DawnNet
         }
     
     private:
-        std::function<SessionPtr(SocketType)> m_SessionFactory;
+        std::function<SessionRef(SocketType)> _sessionFactory;
 
-        SessionPtr _session;
+        SessionRef _session;
 
-        std::string m_Host;
-        std::string m_Port;
-        ResolverType m_Resolver;
+        std::string _host;
+        std::string _port;
+        ResolverType _resolver;
     };
 }

@@ -33,6 +33,8 @@
 ---------------- */
 
 #include <DawnNet/Core/Types.hpp>
+#include <DawnNet/Core/Error.hpp>
+#include <DawnNet/Core/Func.hpp>
 #include <DawnNet/Core/Global.hpp>
 #include <DawnNet/Core/TLS.hpp>
 #include <DawnNet/Core/Macro.hpp>

@@ -11,11 +11,4 @@ namespace DawnNet
     // extern class DeadLockProfiler*	GDeadLockProfiler;
     // extern class DBConnectionPool*	GDBConnectionPool;
     // extern class ConsoleLog* GConsoleLogger;
-
- 
-    typedef unsigned long long int tick64_t;
-    typedef unsigned long int tick32_t;
-    
-    tick32_t XGetTickCount();    
-    tick64_t XGetTickCount64();
 }

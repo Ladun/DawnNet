@@ -1,17 +1,16 @@
 
 #include <DawnNet/pch.hpp>
-#include <DawnNet/Connector.hpp>
-#include <DawnNet/IOContext.hpp>
-#include <DawnNet/Error.hpp>
+#include <DawnNet/Network/Connector.hpp>
+#include <DawnNet/Network/IOContext.hpp>
 
 namespace DawnNet
 {
-    Connector::Connector(std::function<SessionPtr(SocketType)> sessionFactory,
+    Connector::Connector(std::function<SessionRef(SocketType)> sessionFactory,
                          const std::string& host, 
                          const std::string& port):
-        m_SessionFactory(sessionFactory), 
-        m_Resolver(IOContext::Instance().GetIOContext()), 
-        m_Host(host), m_Port(port), _session()
+        _sessionFactory(sessionFactory), 
+        _resolver(IOContext::Instance().GetIOContext()), 
+        _host(host), _port(port), _session(nullptr)
     {
 
     }
@@ -24,7 +23,7 @@ namespace DawnNet
     {        
         SocketType socket(IOContext::Instance().GetIOContext());
 
-        ResolverType::iterator endpoint_iterator = m_Resolver.resolve(m_Host, m_Port);
+        ResolverType::iterator endpoint_iterator = _resolver.resolve(_host, _port);
         ResolverType::iterator end;
         boost::system::error_code error = boost::asio::error::host_not_found;
         
@@ -34,11 +33,10 @@ namespace DawnNet
             socket.connect(*endpoint_iterator++, error);
         }
         if(error)
-            return eErrCodeHostNotFound;
+            return ErrCodeHostNotFound;
 
-        _session = m_SessionFactory(std::move(socket));
+        _session = _sessionFactory(std::move(socket));
         _session->Start();
-        _session->OnConnected();
         
         return 0;
     }
