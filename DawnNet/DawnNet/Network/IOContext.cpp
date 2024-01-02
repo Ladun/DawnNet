@@ -4,7 +4,7 @@
 namespace DawnNet
 {
 
-	IOContext::IOContext() : m_IOContext(), m_Strand(m_IOContext), m_Work(m_IOContext)
+	IOContext::IOContext() : _ioContext(), _strand(_ioContext), _work(_ioContext)
 	{
 	}
 
@@ -14,16 +14,16 @@ namespace DawnNet
 
 	ErrCode IOContext::Run()
 	{
-		return m_IOContext.run();
+		return _ioContext.run();
 	}
 
 	void IOContext::Stop()
 	{
-		m_IOContext.stop();
+		_ioContext.stop();
 	}
 
 	void IOContext::Restart()
 	{
-		m_IOContext.restart();
+		_ioContext.restart();
 	}
 }

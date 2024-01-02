@@ -44,6 +44,8 @@ namespace DawnNet
     USING_SHARED_PTR(SendBuffer);
     USING_SHARED_PTR(SendBufferChunk);
     USING_SHARED_PTR(Job);
-    USING_SHARED_PTR(JobQueue);
+    USING_SHARED_PTR(JobQueue);    
 
+    // Others    
+    using SessionFactory = std::function<SessionRef(void)>;
 } // namespace DawnNet

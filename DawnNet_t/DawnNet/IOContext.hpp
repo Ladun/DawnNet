@@ -20,19 +20,19 @@ namespace DawnNet
 		template<typename THandler>
 		auto BindExecutor(THandler&& handler)
 		{
-			return boost::asio::bind_executor(m_Strand, handler);
+			return boost::asio::bind_executor(_strand, handler);
 		}
 		template<typename THandler>
 		void Post(THandler&& handler)
 		{
-			return m_IOContext.post(m_Strand, handler);
+			return _ioContext.post(_strand, handler);
 		}
 
-		boost::asio::io_context& GetIOContext() { return m_IOContext; }
+		boost::asio::io_context& GetIOContext() { return _ioContext; }
 
 	private:
-		boost::asio::io_context			    m_IOContext;
-		boost::asio::io_context::strand	    m_Strand;
-		boost::asio::io_context::work	    m_Work;
+		boost::asio::io_context			    _ioContext;
+		boost::asio::io_context::strand	    _strand;
+		boost::asio::io_context::work	    _work;
     };
 }
