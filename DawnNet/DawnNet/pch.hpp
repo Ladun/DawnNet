@@ -50,4 +50,5 @@
 #include <DawnNet/Memory/ObjectPool.hpp>
 #include <DawnNet/Memory/Memory.hpp>
 #include <DawnNet/Buffer/SendBuffer.hpp>
+#include <DawnNet/Network/Session.hpp>
 #include <DawnNet/Concurrency/JobQueue.hpp>

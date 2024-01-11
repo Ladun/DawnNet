@@ -19,8 +19,8 @@ namespace DawnNet
     public:
         CoreGlobal()
         {
-            GThreadManager = new ThreadManager();
             GMemory = new Memory();
+            GThreadManager = new ThreadManager();
             GSendBufferManager = new SendBufferManager();
             GGlobalQueue = new GlobalQueue();
             GJobTimer = new JobTimer();

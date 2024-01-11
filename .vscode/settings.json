@@ -83,5 +83,6 @@
     "C_Cpp.intelliSenseCacheSize": 1024,
     "C_Cpp.default.forcedInclude": [
         "${"
-    ]
+    ],
+    "C_Cpp.default.compilerPath": "C:\\mingw64\\bin\\g++.exe"
 }

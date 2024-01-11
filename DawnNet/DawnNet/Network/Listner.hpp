@@ -3,22 +3,21 @@
 #include <functional>
 #include <DawnNet/Network/Session.hpp>
 
-
+class ServerService;
+ 
 namespace DawnNet
 {
     class Listner
     {
     public:
-        Listner(std::function<SessionRef(SocketType)> sessionFactory,
-                const EndpointType& endpoint);
+        Listner(const EndpointType& endpoint);
         ~Listner();
         
-        void StartAccept();
+        bool StartAccept(ServerServiceRef service);
         ErrCode Close();
 
 
     private:
-        std::function<SessionRef(SocketType)> _sessionFactory;
         AcceptorType _acceptor;
 
     };

@@ -2,18 +2,20 @@
 #include <DawnNet/pch.hpp>
 #include <DawnNet/Network/Session.hpp>
 #include <DawnNet/Network/IOContext.hpp>
-#include <DawnNet/Network/Session.hpp>
+#include <DawnNet/Network/Service.hpp>
 
 namespace DawnNet
 {
 
-    Session::Session(SocketType&& socket) 
-        : _socket(std::move(socket)), _recvBuffer(BUFFER_SIZE)
+    Session::Session() 
+        : _socket(IOContext::Instance().GetIOContext()), _recvBuffer(BUFFER_SIZE)
     {
+        
     }
 
     Session::~Session()
     {
+        std::cout << "~Session\n";
         _socket.close();
     }
 
@@ -21,6 +23,8 @@ namespace DawnNet
     {
 
 	    _connected.store(true);
+
+        GetService()->AddSession(GetSessionRef());
 
         OnConnected();
 
@@ -38,6 +42,7 @@ namespace DawnNet
             _socket.close(errCode);
 
         OnDisconnected();
+        GetService()->ReleaseSession(GetSessionRef());
             
     }
 
@@ -57,6 +62,7 @@ namespace DawnNet
             if (_sendRegistered.exchange(true) == false)
                 registerSend = true;
         }
+        std::cout << "Register Send!!\n\n";
         if(registerSend)
             RegisterSend();
 
@@ -80,7 +86,7 @@ namespace DawnNet
         _socket.async_read_some(boost::asio::buffer(writePtr, size), IOContext::Instance().BindExecutor(
             [this](const boost::system::error_code& ec, std::size_t recvSize)
             {
-                
+                std::cout << "Recv: " << recvSize << '\n';
                 if(ec.value() != 0)
                 {
                     std::cout << "Fail to recv, error: "<< ec.message() <<"\n";
@@ -193,8 +199,8 @@ namespace DawnNet
         Packet Session
     ------------------*/
 
-    PacketSession::PacketSession(SocketType&& socket)
-        : Session(std::move(socket))
+    PacketSession::PacketSession()
+        : Session()
     {
     }
 
@@ -206,6 +212,7 @@ namespace DawnNet
     int32 PacketSession::OnRecv(BYTE* buffer, int32 len)
     {
         int32 processLen = 0;
+        std::cout << "OnRecv: " << len << '\n';
 
         while (true)
         {

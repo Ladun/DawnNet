@@ -55,6 +55,7 @@ namespace DawnNet
 
     void ThreadManager::DestroyTLS()
     {
+        std::cout << "DestoryTLS\n";
     }
 
     void ThreadManager::DoGlobalQueueWork()

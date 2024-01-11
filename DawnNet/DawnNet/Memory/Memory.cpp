@@ -97,7 +97,7 @@ namespace DawnNet
         if (allocSize > MAX_ALLOC_SIZE)
         {
             // 메모리 풀링 최대 크기 벗어나면 일반 해제
-            ALIGNED_FREE(header);
+            free(header);
         }
         else
         {

@@ -5,7 +5,15 @@ set(PROJECT_NAME DawnNet)
 project(${PROJECT_NAME})
 
 # find boost packages
-find_package(Boost 1.82.0 REQUIRED COMPONENTS thread)
+if(UNIX)
+    find_package(Boost 1.82.0 REQUIRED COMPONENTS thread)
+else()
+    set(Boost_ROOT "E:/Dev/tools/boost_1_82_0")
+    set (Boost_LIBRARY_DIR ${Boost_ROOT}/stage/lib)
+    set (Boost_INCLUDE_DIRS ${Boost_ROOT})
+    link_directories(${Boost_LIBRARY_DIR})
+
+endif()
 
 # source
 file(GLOB_RECURSE SOURCES

@@ -2,13 +2,12 @@
 #include <DawnNet/pch.hpp>
 #include <DawnNet/Network/Connector.hpp>
 #include <DawnNet/Network/IOContext.hpp>
+#include <DawnNet/Network/Service.hpp>
 
 namespace DawnNet
 {
-    Connector::Connector(std::function<SessionRef(SocketType)> sessionFactory,
-                         const std::string& host, 
+    Connector::Connector(const std::string& host, 
                          const std::string& port):
-        _sessionFactory(sessionFactory), 
         _resolver(IOContext::Instance().GetIOContext()), 
         _host(host), _port(port), _session(nullptr)
     {
@@ -19,9 +18,9 @@ namespace DawnNet
     {
     }
 
-    ErrCode Connector::Connect()
-    {        
-        SocketType socket(IOContext::Instance().GetIOContext());
+    bool Connector::Connect(ClientServiceRef& service)
+    {
+        _session = service->CreateSession();
 
         ResolverType::iterator endpoint_iterator = _resolver.resolve(_host, _port);
         ResolverType::iterator end;
@@ -29,15 +28,14 @@ namespace DawnNet
         
         while(error && endpoint_iterator != end)
         {
-            socket.close();
-            socket.connect(*endpoint_iterator++, error);
+            _session->Socket().close();
+            _session->Socket().connect(*endpoint_iterator++, error);
         }
         if(error)
-            return ErrCodeHostNotFound;
+            return false;
 
-        _session = _sessionFactory(std::move(socket));
         _session->Start();
         
-        return 0;
+        return true;
     }
 }

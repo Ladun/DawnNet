@@ -4,8 +4,6 @@
 #include <atomic>
 #include <condition_variable>
 
-#include <boost/asio.hpp>
-
 namespace DawnNet
 {
     // Default data types
@@ -45,7 +43,4 @@ namespace DawnNet
     USING_SHARED_PTR(SendBufferChunk);
     USING_SHARED_PTR(Job);
     USING_SHARED_PTR(JobQueue);    
-
-    // Others    
-    using SessionFactory = std::function<SessionRef(void)>;
 } // namespace DawnNet
