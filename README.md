@@ -22,3 +22,12 @@ sudo ./b2 install
 
 - Following next link -> [Protobuf](https://github.com/protocolbuffers/protobuf/blob/v21.12/src/README.md)
 - current repository using `protobuf-v21.12`
+
+## Usage
+- The phrases `example/Server` and `example/Client` are actually used example codes. To use this project, two basic elements are required:
+
+1. PacketHandler Creation
+    - You need to create a class that handles packets designed in protobuf using the `tools/PacketGenerator`.
+
+2. Creating a Class Inheriting from PacketSession
+    - After creating a Session class for network communication, you must override internal functions.
