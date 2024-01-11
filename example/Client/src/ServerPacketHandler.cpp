@@ -21,7 +21,7 @@ namespace DawnNet
 
 	bool Handle_S_CHAT(PacketSessionRef& session, Protocol::S_CHAT& pkt)
 	{
-		std::cout << "Recv msg: " << pkt.msg() << std::endl;
+		std::cout << pkt.nickname() << ": " << pkt.msg() << std::endl;
 		return true;
 	}
 }

@@ -481,9 +481,24 @@ class C_CHAT final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kMsgFieldNumber = 1,
+    kNicknameFieldNumber = 1,
+    kMsgFieldNumber = 2,
   };
-  // string msg = 1;
+  // string nickname = 1;
+  void clear_nickname();
+  const std::string& nickname() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_nickname(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_nickname();
+  PROTOBUF_NODISCARD std::string* release_nickname();
+  void set_allocated_nickname(std::string* nickname);
+  private:
+  const std::string& _internal_nickname() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_nickname(const std::string& value);
+  std::string* _internal_mutable_nickname();
+  public:
+
+  // string msg = 2;
   void clear_msg();
   const std::string& msg() const;
   template <typename ArgT0 = const std::string&, typename... ArgT>
@@ -505,6 +520,7 @@ class C_CHAT final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr nickname_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr msg_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
@@ -634,10 +650,25 @@ class S_CHAT final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kMsgFieldNumber = 2,
+    kNicknameFieldNumber = 2,
+    kMsgFieldNumber = 3,
     kPlayerIdFieldNumber = 1,
   };
-  // string msg = 2;
+  // string nickname = 2;
+  void clear_nickname();
+  const std::string& nickname() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_nickname(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_nickname();
+  PROTOBUF_NODISCARD std::string* release_nickname();
+  void set_allocated_nickname(std::string* nickname);
+  private:
+  const std::string& _internal_nickname() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_nickname(const std::string& value);
+  std::string* _internal_mutable_nickname();
+  public:
+
+  // string msg = 3;
   void clear_msg();
   const std::string& msg() const;
   template <typename ArgT0 = const std::string&, typename... ArgT>
@@ -668,6 +699,7 @@ class S_CHAT final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr nickname_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr msg_;
     uint64_t playerid_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
@@ -761,7 +793,57 @@ S_LOGIN::mutable_players() {
 
 // C_CHAT
 
-// string msg = 1;
+// string nickname = 1;
+inline void C_CHAT::clear_nickname() {
+  _impl_.nickname_.ClearToEmpty();
+}
+inline const std::string& C_CHAT::nickname() const {
+  // @@protoc_insertion_point(field_get:Protocol.C_CHAT.nickname)
+  return _internal_nickname();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void C_CHAT::set_nickname(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.nickname_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:Protocol.C_CHAT.nickname)
+}
+inline std::string* C_CHAT::mutable_nickname() {
+  std::string* _s = _internal_mutable_nickname();
+  // @@protoc_insertion_point(field_mutable:Protocol.C_CHAT.nickname)
+  return _s;
+}
+inline const std::string& C_CHAT::_internal_nickname() const {
+  return _impl_.nickname_.Get();
+}
+inline void C_CHAT::_internal_set_nickname(const std::string& value) {
+  
+  _impl_.nickname_.Set(value, GetArenaForAllocation());
+}
+inline std::string* C_CHAT::_internal_mutable_nickname() {
+  
+  return _impl_.nickname_.Mutable(GetArenaForAllocation());
+}
+inline std::string* C_CHAT::release_nickname() {
+  // @@protoc_insertion_point(field_release:Protocol.C_CHAT.nickname)
+  return _impl_.nickname_.Release();
+}
+inline void C_CHAT::set_allocated_nickname(std::string* nickname) {
+  if (nickname != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.nickname_.SetAllocated(nickname, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.nickname_.IsDefault()) {
+    _impl_.nickname_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:Protocol.C_CHAT.nickname)
+}
+
+// string msg = 2;
 inline void C_CHAT::clear_msg() {
   _impl_.msg_.ClearToEmpty();
 }
@@ -835,7 +917,57 @@ inline void S_CHAT::set_playerid(uint64_t value) {
   // @@protoc_insertion_point(field_set:Protocol.S_CHAT.playerId)
 }
 
-// string msg = 2;
+// string nickname = 2;
+inline void S_CHAT::clear_nickname() {
+  _impl_.nickname_.ClearToEmpty();
+}
+inline const std::string& S_CHAT::nickname() const {
+  // @@protoc_insertion_point(field_get:Protocol.S_CHAT.nickname)
+  return _internal_nickname();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void S_CHAT::set_nickname(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.nickname_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:Protocol.S_CHAT.nickname)
+}
+inline std::string* S_CHAT::mutable_nickname() {
+  std::string* _s = _internal_mutable_nickname();
+  // @@protoc_insertion_point(field_mutable:Protocol.S_CHAT.nickname)
+  return _s;
+}
+inline const std::string& S_CHAT::_internal_nickname() const {
+  return _impl_.nickname_.Get();
+}
+inline void S_CHAT::_internal_set_nickname(const std::string& value) {
+  
+  _impl_.nickname_.Set(value, GetArenaForAllocation());
+}
+inline std::string* S_CHAT::_internal_mutable_nickname() {
+  
+  return _impl_.nickname_.Mutable(GetArenaForAllocation());
+}
+inline std::string* S_CHAT::release_nickname() {
+  // @@protoc_insertion_point(field_release:Protocol.S_CHAT.nickname)
+  return _impl_.nickname_.Release();
+}
+inline void S_CHAT::set_allocated_nickname(std::string* nickname) {
+  if (nickname != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.nickname_.SetAllocated(nickname, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.nickname_.IsDefault()) {
+    _impl_.nickname_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:Protocol.S_CHAT.nickname)
+}
+
+// string msg = 3;
 inline void S_CHAT::clear_msg() {
   _impl_.msg_.ClearToEmpty();
 }

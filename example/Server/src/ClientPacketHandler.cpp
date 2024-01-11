@@ -26,9 +26,10 @@ namespace DawnNet
 
 	bool Handle_C_CHAT(PacketSessionRef& session, Protocol::C_CHAT& pkt)
 	{
-		std::cout << pkt.msg() << std::endl;
+		std::cout << pkt.nickname() << ": " << pkt.msg() << std::endl;
 
 		Protocol::S_CHAT chatPkt;
+		chatPkt.set_nickname(pkt.nickname());
 		chatPkt.set_msg(pkt.msg());
 		auto sendBuffer = ClientPacketHandler::MakeSendBuffer(chatPkt);
 

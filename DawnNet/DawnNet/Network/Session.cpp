@@ -62,7 +62,6 @@ namespace DawnNet
             if (_sendRegistered.exchange(true) == false)
                 registerSend = true;
         }
-        std::cout << "Register Send!!\n\n";
         if(registerSend)
             RegisterSend();
 
@@ -86,7 +85,6 @@ namespace DawnNet
         _socket.async_read_some(boost::asio::buffer(writePtr, size), IOContext::Instance().BindExecutor(
             [this](const boost::system::error_code& ec, std::size_t recvSize)
             {
-                std::cout << "Recv: " << recvSize << '\n';
                 if(ec.value() != 0)
                 {
                     std::cout << "Fail to recv, error: "<< ec.message() <<"\n";
@@ -212,7 +210,6 @@ namespace DawnNet
     int32 PacketSession::OnRecv(BYTE* buffer, int32 len)
     {
         int32 processLen = 0;
-        std::cout << "OnRecv: " << len << '\n';
 
         while (true)
         {

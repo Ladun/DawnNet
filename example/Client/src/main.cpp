@@ -46,11 +46,19 @@ int main(int argc, char* argv[])
         });
     }
 
-    Protocol::C_CHAT chatPkt;
-    chatPkt.set_msg(std::string("Hello World!"));
-    auto sendBuffer = ServerPacketHandler::MakeSendBuffer(chatPkt);
+    std::string nickname(argv[1]);
+    while(true)
+    {
+        std::string msg;
+        std::getline(std::cin, msg);
+        
+        Protocol::C_CHAT chatPkt;   
+        chatPkt.set_nickname(nickname);
+        chatPkt.set_msg(msg);
+        auto sendBuffer = ServerPacketHandler::MakeSendBuffer(chatPkt);
 
-    service->Broadcast(sendBuffer);      
+        service->Broadcast(sendBuffer);   
+    }
     
     DawnNet::GThreadManager->Join();       
     std::cout << "Client End\n";
