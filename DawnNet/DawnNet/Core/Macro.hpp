@@ -1,8 +1,8 @@
 #pragma once
 
 #define OUT
-// #define DN_PLATFORM_LINUX
-#define DN_PLATFORM_WINDOWS
+#define DN_PLATFORM_LINUX
+// #define DN_PLATFORM_WINDOWS
 
 #if defined(DN_PLATFORM_WINDOWS) 
 #include <windows.h>

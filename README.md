@@ -23,7 +23,7 @@ sudo ./b2 install
 - Following next link -> [Protobuf](https://github.com/protocolbuffers/protobuf/blob/v21.12/src/README.md)
 - current repository using `protobuf-v21.12`
 
-## Usage
+# Usage
 - The phrases `example/Server` and `example/Client` are actually used example codes. To use this project, two basic elements are required:
 
 1. PacketHandler Creation
@@ -31,3 +31,19 @@ sudo ./b2 install
 
 2. Creating a Class Inheriting from PacketSession
     - After creating a Session class for network communication, you must override internal functions.
+
+# Current Features
+
+Right now, `DawnNet` is very bare-bones. Its most remarkable features are:
+
+| Feature                   | Description                                                 | Status   |
+| -------                   | -----------                                                 | ------   |
+| **Network communication** | Basic socket network communication through *boost.asio*     | Done ✔️  |
+| **Thread Managing**       | multi-thread management                                     | Done ✔️  |
+| **Memory Managing**       | Memory management using memory pool                         | Done ✔️  |
+
+# Planned Features
+
+| Feature                      | Description                                                           | Status   |
+| -------                      | -----------                                                           | ------   |
+| **Position interpolation**   | Ability to adjust the position of objects in the server environment   | TODO 📋  |
