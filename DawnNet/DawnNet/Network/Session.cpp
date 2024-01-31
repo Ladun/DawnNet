@@ -169,7 +169,6 @@ namespace DawnNet
                 }
 
                 ProcessSend(sendSize);
-                OnSend(sendSize);
             })
         );
     }

@@ -20,7 +20,8 @@ namespace DawnNet
 		template<typename THandler>
 		void Post(THandler&& handler)
 		{
-			return _ioContext.post(_strand, handler);
+			// return _ioContext.post(_strand, handler);
+			_strand.post(handler);
 		}
 
 		boost::asio::io_context& GetIOContext() { return _ioContext; }
